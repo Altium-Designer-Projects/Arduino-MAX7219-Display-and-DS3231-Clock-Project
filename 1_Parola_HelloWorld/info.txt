@@ -1,0 +1,56 @@
+
+
+https://www.tosyaelectronics.com
+
+
+
+https://www.tosyaelectronics.com/projects/keypad-navigasyon/
+https://www.tosyaelectronics.com/projects/ds3231-real-time-clock/
+
+
+
+
+MAX7219 DISPLAY
+https://www.hotmcu.com/cascaded-max7219-dot-matrix-module-p-297.html
+
+
+
+  PA_PRINT
+  PA_NO_EFFECT
+  
+  PA_SCAN_HORIZ
+  PA_SCAN_VERT
+  PA_SCROLL_LEFT
+  PA_SCROLL_RIGHT
+  PA_WIPE
+  PA_WIPE_CURSOR
+  PA_SCROLL_UP_RIGHT
+  PA_SCROLL_UP_LEFT
+  PA_SCROLL_UP
+  PA_OPENING_CURSOR
+  PA_GROW_UP
+  PA_MESH
+  PA_BLINDS
+  PA_OPENING
+  PA_CLOSING
+  PA_CLOSING_CURSOR
+  PA_RANDOM
+  PA_GROW_DOWN
+  PA_DISSOLVE
+  PA_SLICE
+  PA_SCROLL_DOWN
+  PA_SCROLL_DOWN_LEFT
+  PA_SCROLL_DOWN_RIGHT
+
+
+  P.setTextEffect(0, PA_SCROLL_UP , PA_SCROLL_DOWN);
+
+
+
+
+
+
+
+
+
+
