@@ -43,6 +43,7 @@ void setup(void){
  timeSecond = 35;
 
  timeDay    = 3;
+ 
  timeMonth  = 12;
  timeDate   = 12;
  timeYear   = 2015;
@@ -101,8 +102,8 @@ void loop(void){
     sprintf(displayBuffer, "%s", days_name[timeDay - 1]);  // - 1 important
    break;
    case 4:
-    displayBuffer[0]  = timeMonth / 10 + 48;
-    displayBuffer[1]  = timeMonth % 10 + 48;
+    displayBuffer[0]  = timeDate / 10 + 48;
+    displayBuffer[1]  = timeDate % 10 + 48;
     displayBuffer[2]  = '.';
     displayBuffer[3]  = '-';
     displayBuffer[4]  = '-';
@@ -118,8 +119,8 @@ void loop(void){
     displayBuffer[0]  = '-';
     displayBuffer[1]  = '-';
     displayBuffer[2]  = '.';
-    displayBuffer[3]  = timeDate / 10 + 48;
-    displayBuffer[4]  = timeDate % 10 + 48;
+    displayBuffer[3]  = timeMonth / 10 + 48;
+    displayBuffer[4]  = timeMonth % 10 + 48;
     displayBuffer[5]  = '.';
     displayBuffer[6]  = '-';
     displayBuffer[7]  = '-';
@@ -146,7 +147,7 @@ void loop(void){
 
 
   switch(dataDirection){
-   case 0:
+   case 0: // hour
      if(UP.isPressed()){
         timeHour++; 
         delay(wait);
@@ -162,7 +163,7 @@ void loop(void){
         }             
      }
    break;
-   case 1:   // dakika kısmı
+   case 1:   // minute
     if(UP.isPressed()){
         timeMinute++;  
         delay(wait);          
@@ -180,7 +181,7 @@ void loop(void){
         }             
      }
     break;
-    case 2:   // saniye kısmı
+    case 2:   // second
      if(UP.isPressed()){
         timeSecond++; 
         delay(wait);          
@@ -214,24 +215,8 @@ void loop(void){
         } 
      }
     break;
-    case 4:
-     if(UP.isPressed()){  // timeDate timeYear
-        timeMonth++;  
-        delay(wait);          
-        if(timeMonth >= 13){
-           timeMonth = 1;
-        } 
-     }
-     if(DW.isPressed()){
-        timeMonth--; 
-        delay(wait);          
-        if(timeMonth <= 0 ){  // 252 253 254 255 0 1 2 3  
-           timeMonth = 12;
-        }             
-     }
-    break;
-    case 5:
-     if(UP.isPressed()){  // timeDate timeYear
+    case 4:  // Date 
+     if(UP.isPressed()){
         timeDate++; 
         delay(wait);
         if(timeDate >= 32){
@@ -243,6 +228,22 @@ void loop(void){
         delay(wait);           
         if(timeDate <= 0){
            timeDate = 31;
+        }             
+     }
+    break;
+    case 5: // Month
+     if(UP.isPressed()){ 
+        timeMonth++;  
+        delay(wait);          
+        if(timeMonth >= 13){
+           timeMonth = 1;
+        } 
+     }
+     if(DW.isPressed()){
+        timeMonth--; 
+        delay(wait);          
+        if(timeMonth <= 0 ){  // 252 253 254 255 0 1 2 3  
+           timeMonth = 12;
         }             
      }
     break;        
