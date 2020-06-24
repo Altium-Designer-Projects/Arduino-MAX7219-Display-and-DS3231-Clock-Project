@@ -4,7 +4,7 @@
 #include <MD_MAX72xx.h>
 #include <SPI.h>
 #include <DS3231.h>
-DS3231 rtc(SDA, SCL); 
+DS3231 rtc(SDA, SCL);
 Time  t;
 
 Button UP = Button(8,BUTTON_PULLDOWN);
@@ -71,12 +71,12 @@ void setup(){
 void loop(){
  
  if(eepromControl == true){  
-   if( EEPROM.read(0) != 120){
+   if( EEPROM.read(0) != 150){
       rtc.setDOW(MONDAY);       
       rtc.setTime(12,12,12);    
       rtc.setDate(1,1,2018);  
    }
-   eepromControl = false;  // Set to true after the enter button
+   eepromControl = false;  // enter butonundan sonra true yap
  }
  
 if(P.displayAnimate()){
@@ -159,7 +159,7 @@ if(P.displayAnimate()){
          timeMonth  = t.mon;
          timeDate   = t.date;
          timeYear   = t.year;
-         timeSync   = false;   //  Set to true after the enter button
+         timeSync   = false;   //  enter dan sonra true yap
       }
     
       switch(dataDirection){
@@ -209,8 +209,8 @@ if(P.displayAnimate()){
         sprintf(displayBuffer, "%s", daysName[timeDay - 1]);  // - 1 important
        break;
        case 4:
-        displayBuffer[0]  = timeMonth / 10 + 48;
-        displayBuffer[1]  = timeMonth % 10 + 48;
+        displayBuffer[0]  = timeDate / 10 + 48;
+        displayBuffer[1]  = timeDate % 10 + 48;
         displayBuffer[2]  = '.';
         displayBuffer[3]  = '-';
         displayBuffer[4]  = '-';
@@ -226,8 +226,8 @@ if(P.displayAnimate()){
         displayBuffer[0]  = '-';
         displayBuffer[1]  = '-';
         displayBuffer[2]  = '.';
-        displayBuffer[3]  = timeDate / 10 + 48;
-        displayBuffer[4]  = timeDate % 10 + 48;
+        displayBuffer[3]  = timeMonth / 10 + 48;
+        displayBuffer[4]  = timeMonth % 10 + 48;
         displayBuffer[5]  = '.';
         displayBuffer[6]  = '-';
         displayBuffer[7]  = '-';
@@ -321,24 +321,8 @@ if(P.displayAnimate()){
             } 
          }
         break;
-        case 4:
-         if(UP.isPressed()){  // timeDate timeYear
-            timeMonth++;  
-            delay(wait);          
-            if(timeMonth >= 13){
-               timeMonth = 1;
-            } 
-         }
-         if(DW.isPressed()){
-            timeMonth--; 
-            delay(wait);          
-            if(timeMonth <= 0 ){  // 252 253 254 255 0 1 2 3  
-               timeMonth = 12;
-            }             
-         }
-        break;
-        case 5:
-         if(UP.isPressed()){   
+        case 4:// Date
+         if(UP.isPressed()){ 
             timeDate++; 
             delay(wait);
             if(timeDate >= 32){
@@ -350,6 +334,22 @@ if(P.displayAnimate()){
             delay(wait);           
             if(timeDate <= 0){
                timeDate = 31;
+            }             
+         }
+        break;
+        case 5:  // month
+         if(UP.isPressed()){  
+            timeMonth++;  
+            delay(wait);          
+            if(timeMonth >= 13){
+               timeMonth = 1;
+            } 
+         }
+         if(DW.isPressed()){
+            timeMonth--; 
+            delay(wait);          
+            if(timeMonth <= 0 ){  // 252 253 254 255 0 1 2 3  
+               timeMonth = 12;
             }             
          }
         break;        
@@ -388,9 +388,9 @@ if(P.displayAnimate()){
         if(EN.heldFor(3000)){  // enter button
            rtc.setTime(timeHour, timeMinute, timeSecond);    
            rtc.setDOW(timeDay); 
-           rtc.setDate(timeMonth, timeDate, timeYear); 
+           rtc.setDate(timeDate, timeMonth, timeYear);  // gün ay yıl
                       
-           EEPROM.write(0 , 120);
+           EEPROM.write(0 , 150);
            dataDirection = 0;
            eepromControl = true;
            timeSync = true;
@@ -403,7 +403,7 @@ if(P.displayAnimate()){
    } // if(systemTime == false && systemSettings == true) end off
 
   
-  if(F1.heldFor(2000)){  // must be in the main loop // we login to the settings section
+  if(F1.heldFor(2000)){  // ana döngüde olmalı // ayarlar bölümüne giriş yapıyoruz
      systemMainLoop = false; 
      systemSettingsLoop = true;
   }
